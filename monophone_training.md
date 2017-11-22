@@ -32,6 +32,17 @@ $ more exp/mono/num_jobs
 20
 ```
 
+## What does fsts.x.gz have?
+```
+$  fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:- | utils/int2sym.pl -f 2- data/lang/words.txt | head -4
+fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:-
+LOG (fsts-to-transcripts[5.2.57~1391-97922]:main():fsts-to-transcripts.cc:97) Converted 128 FSTs, 0 with errors
+103-1240-0015 IF HE'D RUN OUT OF TURNIP SEED HE WOULDN'T DRESS UP AND TAKE THE BUGGY TO GO FOR MORE
+103-1241-0019 I HAD MADE UP MY MIND THAT IF YOU DIDN'T COME FOR ME TO NIGHT
+103-1241-0025 IT'S WORSE THAN ANYTHING YOU COULD IMAGINE MISSUS SPENCER SAID IT WAS WICKED OF ME TO TALK LIKE THAT
+1034-121119-0009 WAS ASCENDING THE STAIRS LEADING TO <UNK> APARTMENTS
+```
+
 ## What does exp/mono/final.mdl has?
 ```
 $ show-transitions exp/mono/phones.txt exp/mono/final.mdl exp/mono/final.occs | head -8
