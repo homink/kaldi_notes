@@ -26,7 +26,7 @@ ali.5.gz   fsts.16.gz
 ```
 
 ## Why ali.x.gz and fsts.x.gz files have numbers up to 20?
-WHen running [steps/train_mono.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/steps/train_mono.sh), --nj was given by 20. This is stored in exp/mono/num_jobs file
+When running [steps/train_mono.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/steps/train_mono.sh), --nj was given by 20. This is stored in exp/mono/num_jobs file
 ```
 $ more exp/mono/num_jobs
 20
