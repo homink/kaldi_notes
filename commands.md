@@ -205,7 +205,7 @@ show-alignments data/lang/phones.txt exp/mono/0.mdl 'ark:gunzip -c exp/mono/ali.
 ```
 
 ### Lattice
-[The lattice (i.e. CompactLattice type known in FSA, acceptor, format, with an arc format) is formed as follows:](http://codingandlearning.blogspot.com/2014/01/kaldi-lattices.html)
+The lattice (i.e. [CompactLattice type known in FSA, acceptor, format, with an arc format](http://codingandlearning.blogspot.com/2014/01/kaldi-lattices.html)) is formed as follows:
 
 [start state id] [end state id] [input & output symbol] [weight]
 
