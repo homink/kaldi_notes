@@ -35,7 +35,13 @@ $ more exp/mono/num_jobs
 
 ## What does fsts.x.gz have?
 ```
-$  fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:- | utils/int2sym.pl -f 2- data/lang/words.txt | head -4
+$ fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:- | head -4                       fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:-
+103-1240-0015 85112 78821 152063 127347 124782 182467 157175 78818 197124 51026 186768 5411 173045 175861 23417 178313 71456 64424 116894
+103-1241-0019 84746 76098 106437 186768 119160 114115 175810 85112 198712 47115 35043 64424 111012 178313 121877
+103-1241-0025 89704 197011 175730 6520 198712 38672 85537 114954 165872 152997 89699 192633 194974 124782 111012 178313 173151 102060 175810
+1034-121119-0009 192633 8588 175861 167203 100011 178313 3 6588
+
+$ fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:- | utils/int2sym.pl -f 2- data/lang/words.txt | head -4
 fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:-
 LOG (fsts-to-transcripts[5.2.57~1391-97922]:main():fsts-to-transcripts.cc:97) Converted 128 FSTs, 0 with errors
 103-1240-0015 IF HE'D RUN OUT OF TURNIP SEED HE WOULDN'T DRESS UP AND TAKE THE BUGGY TO GO FOR MORE
