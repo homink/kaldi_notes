@@ -1,5 +1,5 @@
 # What is found after running steps/train_mono.sh
-When you have something unclear system, it is useful to analyze the output for drawing a bic picture. Here, we analyze the output of the monophone training in Kaldi. After running [steps/train_mono.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/steps/train_mono.sh) and [utils/mkgraph.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/mkgraph.sh), you will find the followings in exp/mono folder.
+When you need to understand complicatd systems, it is useful to analyze the output for drawing a bic picture. Here, we analyze the output of the monophone training in Kaldi. After running [steps/train_mono.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/steps/train_mono.sh) and [utils/mkgraph.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/mkgraph.sh), you will find the followings in exp/mono folder.
 
 ## Browsing the output folder
 
