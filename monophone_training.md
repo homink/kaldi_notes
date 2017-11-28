@@ -161,6 +161,137 @@ SE 0 [ 35 36 37 38 39 40 41 42 ]
 LOG (copy-tree[5.2.57~1391-97922]:main():copy-tree.cc:55) Copied tree
 ```
 
+## What information does the graph have
+
+```
+$ ls exp/mono/graph_nosp_tgsmall/
+HCLG.fst  disambig_tid.int  num_pdfs  phones  phones.txt  words.txt
+
+$ fstprint exp/mono/graph_nosp_tgsmall/HCLG.fst | utils/int2sym.pl -f 3-4 data/lang/words.txt | head -15
+0 5035658 <SPOKEN_NOISE> <eps> 2.85351562
+0 5035659 <UNK> <eps> 2.85351562
+0 5035660 A <eps> 0.958984375
+0 5035661 ABBOTTS <UNK> 9.76855469
+0 5035662 ABBREVIATE <UNK> 9.76855469
+0 5035663 ABBREVIATED <UNK> 7.02441406
+0 7 ABDELAZIZ <eps> 4.51464844
+0 8 ABGARUS <eps> 4.56640625
+0 9 ABIDINGLY <eps> 4.58496094
+0 10 ABISHAG <eps> 5.61425781
+0 11 ABLEST <eps> 4.34960938
+0 12 ABNORMALITY ZOE 12.3945312
+0 13 ABOUD ALREADY 8.83105469
+0 14 ABOYNE <eps> 5.14941406
+0 15 ABRAM'S AW 11.1425781
+
+$ fstprint exp/mono/graph_nosp_tgsmall/HCLG.fst | utils/int2sym.pl -f 3-4 data/lang/words.txt | tail -15
+7879959 7879959 A'GOIN <eps> 0.0111733666
+7879960 5035648 <eps> <eps> 0.224698409
+7879960 7879960 A'GOIN <eps> 0.0111733666
+7879961 5035654 <eps> <eps> 0.224698409
+7879961 7879961 A'GOIN <eps> 0.0111733666
+7879962 5035646 <eps> <eps> 0.204305485
+7879962 7879962 A'MOST <eps> 0.0138839306
+7879963 5035647 <eps> <eps> 0.204305485
+7879963 7879963 A'MOST <eps> 0.0138839306
+7879964 5035654 <eps> <eps> 0.204305485
+7879964 7879964 A'MOST <eps> 0.0138839306
+7879965 5035653 <eps> <eps> 0.138878509
+7879965 7879965 ADENOID <eps> 0.0286853202
+7879966 5035653 <eps> <eps> 0.0376653336
+7879966 7879966 ADELBERT <eps> 0.11588525
+
+$ more exp/mono/graph_nosp_tgsmall/disambig_tid.int
+2197
+2198
+2199
+2200
+2201
+2202
+2203
+2204
+2205
+2206
+2207
+2208
+2209
+2210
+2211
+2212
+2213
+
+$ more exp/mono/graph_nosp_tgsmall/num_pdfs
+127
+
+$ head -5 exp/mono/graph_nosp_tgsmall/phones.txt
+<eps> 0
+SIL 1
+SIL_B 2
+SIL_E 3
+SIL_I 4
+
+$ tail -5 exp/mono/graph_nosp_tgsmall/phones.txt
+#12 359
+#13 360
+#14 361
+#15 362
+#16 363
+
+head -5 exp/mono/graph_nosp_tgsmall/words.txt
+<eps> 0
+!SIL 1
+<SPOKEN_NOISE> 2
+<UNK> 3
+A 4
+
+$ tail -5 exp/mono/graph_nosp_tgsmall/words.txt
+ZZZ 200002
+ZZZZ 200003
+#0 200004
+<s> 200005
+</s> 200006
+
+$ ls exp/mono/graph_nosp_tgsmall/phones
+align_lexicon.int  disambig.int  optional_silence.csl  optional_silence.txt  word_boundary.int
+align_lexicon.txt  disambig.txt  optional_silence.int  silence.csl           word_boundary.txt
+
+$ head -5 exp/mono/graph_nosp_tgsmall/phones/align_lexicon.*
+==> exp/mono/graph_nosp_tgsmall/phones/align_lexicon.int <==
+1 1 5
+2 2 10
+3 3 10
+0 0 1
+4 4 242
+
+==> exp/mono/graph_nosp_tgsmall/phones/align_lexicon.txt <==
+!SIL !SIL SIL_S
+<SPOKEN_NOISE> <SPOKEN_NOISE> SPN_S
+<UNK> <UNK> SPN_S
+<eps> <eps> SIL
+A A AH0_S
+
+
+$ cat exp/mono/graph_nosp_tgsmall/phones/optional_silence.*
+1
+1
+SIL
+
+$ head -5 exp/mono/graph_nosp_tgsmall/phones/word_boundary.*
+==> exp/mono/graph_nosp_tgsmall/phones/word_boundary.int <==
+1 nonword
+2 begin
+3 end
+4 internal
+5 singleton
+
+==> exp/mono/graph_nosp_tgsmall/phones/word_boundary.txt <==
+SIL nonword
+SIL_B begin
+SIL_E end
+SIL_I internal
+SIL_S singleton
+```
+
 ## [steps/decode.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/decode.sh) produces the lattice and scored information
 
 The lattice (i.e. [CompactLattice type known in FSA, acceptor, format, with an arc format](http://codingandlearning.blogspot.com/2014/01/kaldi-lattices.html)) is formed as follows:
