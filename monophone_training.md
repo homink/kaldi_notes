@@ -161,7 +161,9 @@ SE 0 [ 35 36 37 38 39 40 41 42 ]
 LOG (copy-tree[5.2.57~1391-97922]:main():copy-tree.cc:55) Copied tree
 ```
 
-## What information does the graph have
+## What information does the graph process produce
+
+[utils/mkgraph.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/mkgraph.sh) produces the linguistic graph information for the decoding
 
 ```
 $ ls exp/mono/graph_nosp_tgsmall/
@@ -292,7 +294,9 @@ SIL_I internal
 SIL_S singleton
 ```
 
-## [steps/decode.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/decode.sh) produces the lattice and scored information
+## what does the decode process produce
+
+[steps/decode.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/decode.sh) produces the lattice and scored information
 
 The lattice (i.e. [CompactLattice type known in FSA, acceptor, format, with an arc format](http://codingandlearning.blogspot.com/2014/01/kaldi-lattices.html)) is formed as follows:
 
