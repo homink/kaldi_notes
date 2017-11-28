@@ -34,6 +34,8 @@ $ more exp/mono/num_jobs
 ```
 
 ## What does fsts.x.gz have?
+
+These are tables of FSTs where transcript is converted to a sequence of indexed number of words per utterance ID. 
 ```
 $ fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:- | head -4
 fsts-to-transcripts 'ark:gunzip -c exp/mono/fsts.1.gz|' ark,t:-
@@ -55,6 +57,12 @@ HAD 76098
 I 84746
 MADE 106437
 UP 186768
+
+$ grep "103-1241-0019" data/train_2kshort/text
+103-1241-0019 I HAD MADE UP MY MIND THAT IF YOU DIDN'T COME FOR ME TO NIGHT
+
+$ grep "1034-121119-0009" data/train_2kshort/text
+1034-121119-0009 WAS ASCENDING THE STAIRS LEADING TO DEBRAY'S APARTMENTS
 ```
 
 ## What does ali.x.gz work with exp/mono/final.mdl?
