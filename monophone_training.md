@@ -4,6 +4,8 @@ When you need to understand complicatd systems, it is useful to analyze the outp
 
 ## Browsing the output folder
 
+Contents of this folder are going to be similar with other training output folders. Once you get some idea what they are, you will be able to review other folders more friendly.
+
 ```
 $ ls exp/mono
 0.mdl      ali.6.gz                        fsts.17.gz
