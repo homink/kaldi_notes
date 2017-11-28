@@ -97,6 +97,9 @@ Transition-state 1058: phone = EH2_S hmm-state = 2 pdf = 126
 ```
 
 ## What does ali.x.gz work with exp/mono/final.mdl?
+
+ali.x.gz files have the alignment information where PDF IDs, posteriors with per-frmae weights, monophones are aligned corresponding to individual acoustic features.
+
 ```
 $ ali-to-pdf exp/mono/final.mdl 'ark:gunzip -c exp/mono/ali.1.gz|' ark,t:- \
   | utils/int2sym.pl -f 2- exp/mono/phones.txt | head -1
