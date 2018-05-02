@@ -110,14 +110,6 @@ nnet3-am-init exp/multi_a/tdnn_7k_rvb1/0.trans_mdl exp/multi_a/tdnn_7k_rvb1/0.ra
 LOG (nnet3-am-init[5.2.107~2-e892]:main():nnet3-am-init.cc:96) Initialized am-nnet (neural net acoustic model) and wrote to exp/multi_a/tdnn_7k_rvb1/0.mdl
 # Accounting: time=3 threads=1
 # Ended (code 0) at Wed May  2 03:44:05 KST 2018, elapsed time 3 seconds
-root@MM-8GPU02:/home/kwon/s1# cat exp/multi_a/tdnn_7k_rvb1/log/init_mdl.log
-# nnet3-am-init exp/multi_a/tdnn_7k_rvb1/0.trans_mdl exp/multi_a/tdnn_7k_rvb1/0.raw exp/multi_a/tdnn_7k_rvb1/0.mdl 
-# Started at Wed May  2 03:44:02 KST 2018
-#
-nnet3-am-init exp/multi_a/tdnn_7k_rvb1/0.trans_mdl exp/multi_a/tdnn_7k_rvb1/0.raw exp/multi_a/tdnn_7k_rvb1/0.mdl 
-LOG (nnet3-am-init[5.2.107~2-e892]:main():nnet3-am-init.cc:96) Initialized am-nnet (neural net acoustic model) and wrote to exp/multi_a/tdnn_7k_rvb1/0.mdl
-# Accounting: time=3 threads=1
-# Ended (code 0) at Wed May  2 03:44:05 KST 2018, elapsed time 3 seconds
 ```
 
 ## compute_prob_train.0.log
