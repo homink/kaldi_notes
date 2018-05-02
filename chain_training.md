@@ -1,7 +1,38 @@
 # What is found after steps/nnet3/chain/train.py
 
-In the training, input arguments for [steps/nnet3/chain/train.py](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/steps/nnet3/chain/train.py) is configured as follows:
+In the training, TDNN network and input arguments for [steps/nnet3/chain/train.py](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/steps/nnet3/chain/train.py) are configured as follows:
 
+```
+  cat <<EOF > $dir/configs/network.xconfig
+  input dim=100 name=ivector
+  input dim=40 name=input
+  # please note that it is important to have input layer with the name=input
+  # as the layer immediately preceding the fixed-affine-layer to enable
+  # the use of short notation for the descriptor
+  fixed-affine-layer name=lda input=Append(-1,0,1,ReplaceIndex(ivector, t, 0)) affine-transform-file=$dir/configs/lda.mat
+  # the first splicing is moved before the lda layer, so no splicing here
+  relu-batchnorm-layer name=tdnn1 dim=$hidden_dim
+  relu-batchnorm-layer name=tdnn2 input=Append(-1,0,1,2) dim=$hidden_dim
+  relu-batchnorm-layer name=tdnn3 input=Append(-3,0,3) dim=$hidden_dim
+  relu-batchnorm-layer name=tdnn4 input=Append(-3,0,3) dim=$hidden_dim
+  relu-batchnorm-layer name=tdnn5 input=Append(-3,0,3) dim=$hidden_dim
+  relu-batchnorm-layer name=tdnn6 input=Append(-6,-3,0) dim=$hidden_dim
+  ## adding the layers for chain branch
+  relu-batchnorm-layer name=prefinal-chain input=tdnn6 dim=$hidden_dim target-rms=0.5
+  output-layer name=output include-log-softmax=false dim=$num_targets max-change=1.5
+  # adding the layers for xent branch
+  # This block prints the configs for a separate output that will be
+  # trained with a cross-entropy objective in the 'chain' models... this
+  # has the effect of regularizing the hidden parts of the model.  we use
+  # 0.5 / args.xent_regularize as the learning rate factor- the factor of
+  # 0.5 / args.xent_regularize is suitable as it means the xent
+  # final-layer learns at a rate independent of the regularization
+  # constant; and the 0.5 was tuned so as to make the relative progress
+  # similar in the xent and regular final layers.
+  relu-batchnorm-layer name=prefinal-xent input=tdnn6 dim=$hidden_dim target-rms=0.5
+  output-layer name=output-xent dim=$num_targets learning-rate-factor=$learning_rate_factor max-change=1.5
+EOF
+```
 ```
 2018-05-02 00:49:53,625 [steps/nnet3/chain/train.py:259 - train - INFO ] Arguments for the experiment
 {'alignment_subsampling_factor': 3,
