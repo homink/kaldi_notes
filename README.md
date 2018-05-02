@@ -10,3 +10,5 @@ This repository describes the Kaldi notes for the Kaldi tool kit beginners. I ho
 ## How to prepare language model
 
 ## How to build training recipe
+
+## [What is found after steps/nnet3/chain/train.py](https://github.com/homink/kaldi_notes/blob/master/chain_training.md)
