@@ -157,31 +157,115 @@ exp/multi_a/tdnn_7k_rvb1/log/compute_prob_train.final.log
 exp/multi_a/tdnn_7k_rvb1/log/compute_prob_valid.final.log
 ```
 
-You many need to check more precise time information using stat command.
-
-## get_lda_stats.1.log
+## make_phone_lm.log
 
 ```
-stat exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.1.log
-  File: `exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.1.log'
-  Size: 1058            Blocks: 8          IO Block: 4096   일반 파일
-Device: 811h/2065d      Inode: 77729266    Links: 1
-Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2018-05-03 08:02:17.490870600 +0900
-Modify: 2018-05-02 03:43:58.870485847 +0900
-Change: 2018-05-02 03:43:58.870485847 +0900
- Birth: -
+# gunzip -c exp/multi_a/tree_tdnn_7k_rvb1/ali.1.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.2.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.3.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.4.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.5.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.6.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.7.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.8.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.9.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.10.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.11.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.12.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.13.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.14.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.15.gz exp/multi_a/tree_tdnn_7k_rvb1/ali.16.gz | ali-to-phones exp/multi_a/tree_tdnn_7k_rvb1/final.mdl ark:- ark:- | chain-est-phone-lm --num-extra-lm-states=2000 ark:- exp/multi_a/tdnn_7k_rvb1/phone_lm.fst 
+# Started at Wed May  2 00:49:53 KST 2018
+#
+ali-to-phones exp/multi_a/tree_tdnn_7k_rvb1/final.mdl ark:- ark:- 
+chain-est-phone-lm --num-extra-lm-states=2000 ark:- exp/multi_a/tdnn_7k_rvb1/phone_lm.fst 
+LOG (chain-est-phone-lm[5.2.107~2-e892]:main():chain-est-phone-lm.cc:62) Reading phone sequences
+LOG (ali-to-phones[5.2.107~2-e892]:main():ali-to-phones.cc:134) Done 2376835 utterances.
+LOG (chain-est-phone-lm[5.2.107~2-e892]:main():chain-est-phone-lm.cc:67) Estimating phone LM
+LOG (chain-est-phone-lm[5.2.107~2-e892]:Estimate():language-model.cc:299) Estimating language model with --no-prune-ngram-order=3, --ngram-order=4, --num-extra-lm-state=2000
+LOG (chain-est-phone-lm[5.2.107~2-e892]:DoBackoff():language-model.cc:253) In LM [hard] backoff, target num states was 10133 + --num-extra-lm-states=2000 = 12133, pruned from 156451 to 12133
+LOG (chain-est-phone-lm[5.2.107~2-e892]:OutputToFst():language-model.cc:395) Total number of phone instances seen was 111289332
+LOG (chain-est-phone-lm[5.2.107~2-e892]:OutputToFst():language-model.cc:396) Perplexity on training data is: 7.00846
+LOG (chain-est-phone-lm[5.2.107~2-e892]:OutputToFst():language-model.cc:397) Note: perplexity on unseen data will be infinity as there is no smoothing.  This is by design, to reduce the number of arcs.
+LOG (chain-est-phone-lm[5.2.107~2-e892]:OutputToFst():language-model.cc:405) Created phone language model with 12133 states and 195194 arcs.
+LOG (chain-est-phone-lm[5.2.107~2-e892]:main():chain-est-phone-lm.cc:73) Estimated phone language model and wrote it to exp/multi_a/tdnn_7k_rvb1/phone_lm.fst
+# Accounting: time=64 threads=1
+# Ended (code 0) at Wed May  2 00:50:57 KST 2018, elapsed time 64 seconds
+```
 
-cat exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.1.log
-# nnet3-chain-acc-lda-stats --rand-prune=4.0 exp/multi_a/tdnn_7k_rvb1/init.raw ark:exp/multi_a/tdnn_7k_rvb1/egs/cegs.1.ark exp/multi_a/tdnn_7k_rvb1/1.lda_stats 
+##
+
+```
+# chain-make-den-fst exp/multi_a/tdnn_7k_rvb1/tree exp/multi_a/tdnn_7k_rvb1/0.trans_mdl exp/multi_a/tdnn_7k_rvb1/phone_lm.fst exp/multi_a/tdnn_7k_rvb1/den.fst exp/multi_a/tdnn_7k_rvb1/normalization.fst 
+# Started at Wed May  2 00:50:57 KST 2018
+#
+chain-make-den-fst exp/multi_a/tdnn_7k_rvb1/tree exp/multi_a/tdnn_7k_rvb1/0.trans_mdl exp/multi_a/tdnn_7k_rvb1/phone_lm.fst exp/multi_a/tdnn_7k_rvb1/den.fst exp/multi_a/tdnn_7k_rvb1/normalization.fst 
+LOG (chain-make-den-fst[5.2.107~2-e892]:CreateDenominatorFst():chain-den-graph.cc:306) Number of states and arcs in phone-LM FST is 12133 and 195194
+LOG (chain-make-den-fst[5.2.107~2-e892]:CreateDenominatorFst():chain-den-graph.cc:328) Number of states and arcs in context-dependent LM FST is 12201 and 196617
+LOG (chain-make-den-fst[5.2.107~2-e892]:CreateDenominatorFst():chain-den-graph.cc:361) Number of states and arcs in transition-id FST is 99616 and 371447
+LOG (chain-make-den-fst[5.2.107~2-e892]:CreateDenominatorFst():chain-den-graph.cc:369) Number of states and arcs in transition-id FST after removing epsilons is 87416 and 2038072
+LOG (chain-make-den-fst[5.2.107~2-e892]:DenGraphMinimizeWrapper():chain-den-graph.cc:228) Number of states and arcs in transition-id FST after reversed minimization is 72553 and 1851031 (pass 1)
+LOG (chain-make-den-fst[5.2.107~2-e892]:DenGraphMinimizeWrapper():chain-den-graph.cc:233) Number of states and arcs in transition-id FST after regular minimization is 58403 and 1637384 (pass 1)
+LOG (chain-make-den-fst[5.2.107~2-e892]:DenGraphMinimizeWrapper():chain-den-graph.cc:228) Number of states and arcs in transition-id FST after reversed minimization is 58405 and 1637386 (pass 2)
+LOG (chain-make-den-fst[5.2.107~2-e892]:DenGraphMinimizeWrapper():chain-den-graph.cc:233) Number of states and arcs in transition-id FST after regular minimization is 58287 and 1636513 (pass 2)
+LOG (chain-make-den-fst[5.2.107~2-e892]:DenGraphMinimizeWrapper():chain-den-graph.cc:228) Number of states and arcs in transition-id FST after reversed minimization is 58289 and 1636515 (pass 3)
+LOG (chain-make-den-fst[5.2.107~2-e892]:DenGraphMinimizeWrapper():chain-den-graph.cc:233) Number of states and arcs in transition-id FST after regular minimization is 58247 and 1636212 (pass 3)
+LOG (chain-make-den-fst[5.2.107~2-e892]:DenGraphMinimizeWrapper():chain-den-graph.cc:238) Number of states and arcs in transition-id FST after removing any epsilons introduced by reversal is 58241 and 1635935
+LOG (chain-make-den-fst[5.2.107~2-e892]:PrintDenGraphStats():chain-den-graph.cc:269) Number of states is 58241 and arcs 1635935; number of states with in-degree <= 3 is 5187 and with out-degree <= 3 is 3054
+LOG (chain-make-den-fst[5.2.107~2-e892]:main():chain-make-den-fst.cc:78) Write denominator FST to exp/multi_a/tdnn_7k_rvb1/den.fst and normalization FST to exp/multi_a/tdnn_7k_rvb1/normalization.fst
+# Accounting: time=26 threads=1
+# Ended (code 0) at Wed May  2 00:51:23 KST 2018, elapsed time 26 seconds
+```
+
+## nnet_init.log
+
+```
+# nnet3-init --srand=-2 exp/multi_a/tdnn_7k_rvb1/configs/init.config exp/multi_a/tdnn_7k_rvb1/init.raw 
+# Started at Wed May  2 00:51:23 KST 2018
+#
+nnet3-init --srand=-2 exp/multi_a/tdnn_7k_rvb1/configs/init.config exp/multi_a/tdnn_7k_rvb1/init.raw 
+LOG (nnet3-init[5.2.107~2-e892]:main():nnet3-init.cc:80) Initialized raw neural net and wrote it to exp/multi_a/tdnn_7k_rvb1/init.raw
+# Accounting: time=0 threads=1
+# Ended (code 0) at Wed May  2 00:51:23 KST 2018, elapsed time 0 seconds
+```
+
+## get_lda_stats.9.log
+
+```
+# nnet3-chain-acc-lda-stats --rand-prune=4.0 exp/multi_a/tdnn_7k_rvb1/init.raw ark:exp/multi_a/tdnn_7k_rvb1/egs/cegs.9.ark exp/multi_a/tdnn_7k_rvb1/9.lda_stats 
 # Started at Wed May  2 03:43:35 KST 2018
 #
-nnet3-chain-acc-lda-stats --rand-prune=4.0 exp/multi_a/tdnn_7k_rvb1/init.raw ark:exp/multi_a/tdnn_7k_rvb1/egs/cegs.1.ark exp/multi_a/tdnn_7k_rvb1/1.lda_stats 
-LOG (nnet3-chain-acc-lda-stats[5.2.107~2-e892]:main():nnet3-chain-acc-lda-stats.cc:195) Processed 10150 examples.
-LOG (nnet3-chain-acc-lda-stats[5.2.107~2-e892]:WriteStats():nnet3-chain-acc-lda-stats.cc:67) Accumulated stats, soft frame count = 506092.  Wrote to exp/multi_a/tdnn_7k_rvb1/1.lda_stats
-LOG (nnet3-chain-acc-lda-stats[5.2.107~2-e892]:~CachingOptimizingCompiler():nnet-optimize.cc:670) 0.00966 seconds taken in nnet3 compilation total (breakdown: 0.000514 compilation, 6.41e-05 optimization, 0 shortcut expansion, 4.22e-05 checking, 6.03e-06 computing indexes, 0.00903 misc.)
-# Accounting: time=23 threads=1
-# Ended (code 0) at Wed May  2 03:43:58 KST 2018, elapsed time 23 seconds
+nnet3-chain-acc-lda-stats --rand-prune=4.0 exp/multi_a/tdnn_7k_rvb1/init.raw ark:exp/multi_a/tdnn_7k_rvb1/egs/cegs.9.ark exp/multi_a/tdnn_7k_rvb1/9.lda_stats 
+LOG (nnet3-chain-acc-lda-stats[5.2.107~2-e892]:main():nnet3-chain-acc-lda-stats.cc:195) Processed 10315 examples.
+LOG (nnet3-chain-acc-lda-stats[5.2.107~2-e892]:WriteStats():nnet3-chain-acc-lda-stats.cc:67) Accumulated stats, soft frame count = 515444.  Wrote to exp/multi_a/tdnn_7k_rvb1/9.lda_stats
+LOG (nnet3-chain-acc-lda-stats[5.2.107~2-e892]:~CachingOptimizingCompiler():nnet-optimize.cc:670) 0.00958 seconds taken in nnet3 compilation total (breakdown: 0.000521 compilation, 7.9e-05 optimization, 0 shortcut expansion, 4.7e-05 checking, 4.94e-06 computing indexes, 0.00893 misc.)
+# Accounting: time=4 threads=1
+# Ended (code 0) at Wed May  2 03:43:39 KST 2018, elapsed time 4 seconds
+```
+
+## sum_transform_stats.log
+
+```
+# sum-lda-accs exp/multi_a/tdnn_7k_rvb1/lda_stats exp/multi_a/tdnn_7k_rvb1/1.lda_stats exp/multi_a/tdnn_7k_rvb1/2.lda_stats exp/multi_a/tdnn_7k_rvb1/3.lda_stats exp/multi_a/tdnn_7k_rvb1/4.lda_stats exp/multi_a/tdnn_7k_rvb1/5.lda_stats exp/multi_a/tdnn_7k_rvb1/6.lda_stats exp/multi_a/tdnn_7k_rvb1/7.lda_stats exp/multi_a/tdnn_7k_rvb1/8.lda_stats exp/multi_a/tdnn_7k_rvb1/9.lda_stats exp/multi_a/tdnn_7k_rvb1/10.lda_stats 
+# Started at Wed May  2 03:43:59 KST 2018
+#
+sum-lda-accs exp/multi_a/tdnn_7k_rvb1/lda_stats exp/multi_a/tdnn_7k_rvb1/1.lda_stats exp/multi_a/tdnn_7k_rvb1/2.lda_stats exp/multi_a/tdnn_7k_rvb1/3.lda_stats exp/multi_a/tdnn_7k_rvb1/4.lda_stats exp/multi_a/tdnn_7k_rvb1/5.lda_stats exp/multi_a/tdnn_7k_rvb1/6.lda_stats exp/multi_a/tdnn_7k_rvb1/7.lda_stats exp/multi_a/tdnn_7k_rvb1/8.lda_stats exp/multi_a/tdnn_7k_rvb1/9.lda_stats exp/multi_a/tdnn_7k_rvb1/10.lda_stats 
+# Accounting: time=1 threads=1
+# Ended (code 0) at Wed May  2 03:44:00 KST 2018, elapsed time 1 seconds
+```
+
+## get_transform.log
+
+```
+# nnet-get-feature-transform exp/multi_a/tdnn_7k_rvb1/lda.mat exp/multi_a/tdnn_7k_rvb1/lda_stats 
+# Started at Wed May  2 03:44:00 KST 2018
+#
+nnet-get-feature-transform exp/multi_a/tdnn_7k_rvb1/lda.mat exp/multi_a/tdnn_7k_rvb1/lda_stats 
+LOG (nnet-get-feature-transform[5.2.107~2-e892]:Estimate():get-feature-transform.cc:35) Data count is 5.15822e+06
+LOG (nnet-get-feature-transform[5.2.107~2-e892]:EstimateInternal():get-feature-transform.cc:84) LDA singular values are  [ 1.22767 0.769907 0.30446 0.257567 0.180265 0.132707 0.127364 0.1136 0.0724881 0.0587797 0.0567012 0.038258 0.0353782 0.0305035 0.0292075 0.0275438 0.0239563 0.0201596 0.01909 0.0182027 0.0174205 0.0166331 0.0164506 0.0162405 0.0160173 0.0158556 0.0156867 0.015654 0.0155085 0.0153507 0.0152542 0.0151491 0.0151362 0.0148654 0.0148084 0.0147516 0.0146876 0.0146638 0.0145834 0.0144737 0.0144498 0.0143937 0.0143235 0.0142838 0.0142188 0.0141283 0.0141063 0.014057 0.014001 0.0139835 0.0138708 0.0138393 0.0137755 0.0137545 0.0137245 0.0136988 0.0136058 0.0135645 0.0135361 0.0134715 0.0134344 0.0133786 0.0133145 0.0132909 0.0132489 0.0132265 0.0131612 0.0130978 0.0130682 0.0129866 0.0129788 0.0128807 0.0128358 0.0128038 0.0127779 0.0127265 0.0127043 0.0126714 0.0126596 0.0126459 0.0126166 0.0125597 0.0124631 0.0124383 0.0123743 0.0123666 0.0123205 0.012292 0.0122332 0.012197 0.0121513 0.0121211 0.0121076 0.0120605 0.0120159 0.0119371 0.0119112 0.0118926 0.0118403 0.0117701 0.0117262 0.0116893 0.0116711 0.0116029 0.011587 0.0115262 0.0115162 0.0114608 0.0114173 0.0113898 0.0113694 0.011313 0.0112794 0.0112748 0.0112097 0.0111389 0.0111096 0.0110704 0.0110064 0.0109763 0.0109067 0.0108798 0.0108129 0.0107894 0.010774 0.0107475 0.0106605 0.0106387 0.0105921 0.0105755 0.0104825 0.0104465 0.0103819 0.0103154 0.0102656 0.010178 0.0101307 0.0101013 0.0100881 0.0100791 0.010013 0.00995392 0.00987662 0.00983519 0.0097972 0.00975593 0.00970295 0.00954618 0.00945659 0.00941827 0.0093879 0.00936638 0.00929314 0.0092598 0.00914529 0.00909925 0.00907747 0.0090417 0.00899492 0.00892686 0.00890253 0.00885664 0.00883876 0.00879974 0.00878701 0.00871172 0.00869657 0.00863877 0.00861454 0.00856676 0.0085303 0.00851104 0.00850293 0.00844828 0.00840691 0.00839142 0.00836152 0.00832563 0.00827521 0.008245 0.00820952 0.00818136 0.0081601 0.00810169 0.00803684 0.00802254 0.0080163 0.0079756 0.00795834 0.00793003 0.00791504 0.0078926 0.00783523 0.00780568 0.00780227 0.00776975 0.00773221 0.00770822 0.0076486 0.00762449 0.00759192 0.00754767 0.00752766 0.00749049 0.00744637 0.00743124 0.00736803 0.00730316 0.00727787 0.0072566 0.00723222 0.00717549 0.00710938 0.00706796 0.00704194 0.00694726 0.00689571 0.0068306 0.00676163 0.00669622 ]
+LOG (nnet-get-feature-transform[5.2.107~2-e892]:EstimateInternal():get-feature-transform.cc:86) Sum of all singular values is 5.73521
+LOG (nnet-get-feature-transform[5.2.107~2-e892]:EstimateInternal():get-feature-transform.cc:87) Sum of selected singular values is 5.73521
+# Accounting: time=0 threads=1
+# Ended (code 0) at Wed May  2 03:44:00 KST 2018, elapsed time 0 seconds
+```
+
+## add_first_layer.log
+
+```
+# nnet3-init --srand=-1 exp/multi_a/tdnn_7k_rvb1/init.raw exp/multi_a/tdnn_7k_rvb1/configs/final.config exp/multi_a/tdnn_7k_rvb1/0.raw 
+# Started at Wed May  2 03:44:01 KST 2018
+#
+nnet3-init --srand=-1 exp/multi_a/tdnn_7k_rvb1/init.raw exp/multi_a/tdnn_7k_rvb1/configs/final.config exp/multi_a/tdnn_7k_rvb1/0.raw 
+LOG (nnet3-init[5.2.107~2-e892]:main():nnet3-init.cc:68) Read raw neural net from exp/multi_a/tdnn_7k_rvb1/init.raw
+LOG (nnet3-init[5.2.107~2-e892]:main():nnet3-init.cc:80) Initialized raw neural net and wrote it to exp/multi_a/tdnn_7k_rvb1/0.raw
+# Accounting: time=1 threads=1
+# Ended (code 0) at Wed May  2 03:44:02 KST 2018, elapsed time 1 seconds
 ```
 
 ## init_mdl.log
