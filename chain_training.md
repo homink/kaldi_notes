@@ -100,7 +100,47 @@ EOF
 We find log files in a timely mannter and see what commands are executed in order. First, list up log files.
 
 ```
-ls exp/multi_a/tdnn_7k_rvb1/log/* -haltr | head
+ls s1/exp/multi_a/tdnn_7k_rvb1/log/* -tr | head -40
+s1/exp/multi_a/tdnn_7k_rvb1/log/make_phone_lm.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/make_den_fst.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/nnet_init.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.9.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.10.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.8.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.7.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.2.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.6.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.3.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.4.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_lda_stats.5.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/sum_transform_stats.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/get_transform.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/add_first_layer.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/init_mdl.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/compute_prob_train.0.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/compute_prob_valid.0.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.0.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.0.2.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.0.3.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.0.4.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/select.0.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/progress.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/compute_prob_valid.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/compute_prob_train.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.1.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.1.4.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.1.2.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.1.3.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/average.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/progress.2.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/compute_prob_valid.2.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/compute_prob_train.2.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.2.1.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.2.4.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.2.2.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/train.2.3.log
+s1/exp/multi_a/tdnn_7k_rvb1/log/average.2.log
 ```
 
 You many need to check more precise time information using stat command.
