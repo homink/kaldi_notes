@@ -179,7 +179,7 @@ EOF
  'xent_regularize': 0.1}
 ```
 
-We find log files in a timely manner and see what commands are executed in order. First, list up log files. We can see some pattern. Let us browse them each.
+We find log files in a timely manner and see what commands are executed in order. First, list up log files. We can see some pattern. Let us browse them each [here](https://github.com/homink/kaldi_notes/blob/master/chain_training_log.md).
 
 ```
 ls exp/multi_a/tdnn_7k_rvb1/log/* -tr | head -30
