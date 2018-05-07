@@ -1,6 +1,6 @@
 # What is found after steps/nnet3/chain/train.py
 
-In the training, TDNN network and input arguments for [steps/nnet3/chain/train.py]([commit e8928](https://github.com/kaldi-asr/kaldi/tree/e89280576107fcac7ad4d1b95eb8eaf8164bdccd))(https://github.com/kaldi-asr/kaldi/blob/e89280576107fcac7ad4d1b95eb8eaf8164bdccd/egs/wsj/s5/steps/nnet3/chain/train.py) are configured as follows:
+In the training, TDNN network and input arguments for [e892805](https://github.com/kaldi-asr/kaldi/tree/e89280576107fcac7ad4d1b95eb8eaf8164bdccd)[steps/nnet3/chain/train.py](https://github.com/kaldi-asr/kaldi/blob/e89280576107fcac7ad4d1b95eb8eaf8164bdccd/egs/wsj/s5/steps/nnet3/chain/train.py) are configured as follows:
 
 ```
   cat <<EOF > $dir/configs/network.xconfig
