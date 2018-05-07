@@ -179,7 +179,7 @@ EOF
  'xent_regularize': 0.1}
 ```
 
-We find log files in a timely manner and see what commands are executed in order. First, list up log files. We can see some pattern. Let us browse them each [here](https://github.com/homink/kaldi_notes/blob/master/chain_training_log.md).
+We find log files in a timely manner and see what commands are executed in order. By listing list up log files, we can see the pattern of the chain training flow. One remarkable poing is [parallel training](https://arxiv.org/pdf/1410.7455.pdf) where the parameter-averaging performs with separate GPU training processes. Details of log files are browsed [here](https://github.com/homink/kaldi_notes/blob/master/chain_training_log.md).
 
 ```
 ls exp/multi_a/tdnn_7k_rvb1/log/* -tr | head -30
@@ -331,6 +331,7 @@ exp/multi_a/tdnn_7k_rvb1/log/compute_prob_valid.final.log
 ```
 
 We can check how the overfitting would come up in accuracy.report as follows.
+
 ```
 head exp/multi_a/tdnn_7k_rvb1/accuracy.report
 %Iter   duration        train_loss      valid_loss      difference
