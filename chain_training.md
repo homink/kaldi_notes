@@ -329,3 +329,18 @@ exp/multi_a/tdnn_7k_rvb1/log/combine.log
 exp/multi_a/tdnn_7k_rvb1/log/compute_prob_train.final.log
 exp/multi_a/tdnn_7k_rvb1/log/compute_prob_valid.final.log
 ```
+
+We can check how the overfitting would come up in accuracy.report as follows.
+```
+head exp/multi_a/tdnn_7k_rvb1/accuracy.report
+%Iter   duration        train_loss      valid_loss      difference
+0       98.0    -1.07591        -1.08398        -0.00807
+1       95.0    -0.631919       -0.638957       -0.007038
+2       95.0    -0.415988       -0.429965       -0.013977
+3       98.0    -0.358987       -0.369345       -0.010358
+4       94.0    -0.325841       -0.333205       -0.007364
+5       94.0    -0.306459       -0.310971       -0.004512
+6       96.0    -0.290208       -0.297254       -0.007046
+7       95.0    -0.278244       -0.286121       -0.007877
+8       94.0    -0.272537       -0.274912       -0.002375
+```
