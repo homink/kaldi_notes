@@ -1,5 +1,86 @@
 # What is found after steps/nnet3/chain/train.py
 
+Let us have a look at the brife flow of [steps/nnet3/chain/train.py](https://github.com/kaldi-asr/kaldi/blob/e89280576107fcac7ad4d1b95eb8eaf8164bdccd/egs/wsj/s5/steps/nnet3/chain/train.py) [(e892805)](https://github.com/kaldi-asr/kaldi/tree/e89280576107fcac7ad4d1b95eb8eaf8164bdccd)
+
+```
+import libs.nnet3.train.common as common_train_lib
+import libs.common as common_lib
+import libs.nnet3.train.chain_objf.acoustic_model as chain_lib
+
+def train(args, run_opts):
+
+    chain_lib.check_for_required_files(args.feat_dir, args.tree_dir,
+                                       args.lat_dir)
+
+    common_lib.execute_command("utils/split_data.sh {0} {1}".format(
+            args.feat_dir, num_jobs))
+
+    variables = common_train_lib.parse_generic_config_vars_file(var_file)
+
+    if (args.stage <= -6):
+        chain_lib.create_phone_lm(args.dir, args.tree_dir, run_opts,
+                                  lm_opts=args.lm_opts)
+
+    if (args.stage <= -5):
+        chain_lib.create_denominator_fst(args.dir, args.tree_dir, run_opts)
+
+    if (args.stage <= -4) and os.path.exists(args.dir+"/configs/init.config"):
+        common_lib.execute_command(
+            """{command} {dir}/log/nnet_init.log \
+                    nnet3-init --srand=-2 {dir}/configs/init.config \
+                    {dir}/init.raw""".format(command=run_opts.command,
+                                             dir=args.dir))
+
+    if (args.stage <= -3) and args.egs_dir is None:
+        chain_lib.generate_chain_egs(...)
+
+    [egs_left_context, egs_right_context,
+     frames_per_eg_str, num_archives] = (
+        common_train_lib.verify_egs_dir(...))
+
+    common_train_lib.copy_egs_properties_to_exp_dir(egs_dir, args.dir)
+
+    if (args.stage <= -2) and os.path.exists(args.dir+"/configs/init.config"):
+        chain_lib.compute_preconditioning_matrix(
+            args.dir, egs_dir, num_archives, run_opts,
+            max_lda_jobs=args.max_lda_jobs,
+            rand_prune=args.rand_prune)
+
+    if (args.stage <= -1):
+        chain_lib.prepare_initial_acoustic_model(args.dir, run_opts)
+
+    for iter in range(num_iters):
+        if args.stage <= iter:
+            chain_lib.train_one_iteration(...)
+
+            if args.cleanup:
+                # do a clean up everythin but the last 2 models, under certain
+                # conditions
+                common_train_lib.remove_model(...)
+
+        num_archives_processed = num_archives_processed + current_num_jobs
+
+    if args.stage <= num_iters:
+        if args.do_final_combination:
+            chain_lib.combine_models(...)
+        else:
+            logger.info("Copying the last-numbered model to final.mdl")
+            common_lib.force_symlink("{0}.mdl".format(num_iters),
+                                     "{0}/final.mdl".format(args.dir))
+            common_lib.force_symlink("compute_prob_valid.{iter}.log".format(
+                                         iter=num_iters-1),
+                                     "{dir}/log/compute_prob_valid.final.log".format(
+                                         dir=args.dir))
+
+    if args.cleanup:
+
+        common_train_lib.clean_nnet_dir(...)
+
+
+    common_lib.execute_command("steps/info/nnet3_dir_info.pl "
+                               "{0}".format(args.dir))
+```
+
 In the training, TDNN network and input arguments for [steps/nnet3/chain/train.py](https://github.com/kaldi-asr/kaldi/blob/e89280576107fcac7ad4d1b95eb8eaf8164bdccd/egs/wsj/s5/steps/nnet3/chain/train.py) [(e892805)](https://github.com/kaldi-asr/kaldi/tree/e89280576107fcac7ad4d1b95eb8eaf8164bdccd) are configured as follows:
 
 ```
