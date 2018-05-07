@@ -179,7 +179,7 @@ EOF
  'xent_regularize': 0.1}
 ```
 
-We find log files in a timely manner and see what commands are executed in order. By listing list up log files, we can see the pattern of the chain training flow. One remarkable poing is [parallel training](https://arxiv.org/pdf/1410.7455.pdf) where the parameter-averaging performs with separate GPU training processes, which starts from 4 to 8 corresponding to  'num_jobs_final': 8, 'num_jobs_initial': 4. Details of log files are browsed [here](https://github.com/homink/kaldi_notes/blob/master/chain_training_log.md).
+We find log files in a timely manner and see what commands are executed in order. By listing list up log files, we can see the pattern of the chain training flow. One remarkable poing is [parallel training](https://arxiv.org/pdf/1410.7455.pdf) where the parameter-averaging performs with separate GPU training processes, which starts from 4 to 8 corresponding to  'num_jobs_initial': 4 and 'num_jobs_final': 8. Details of log files are browsed [here](https://github.com/homink/kaldi_notes/blob/master/chain_training_log.md).
 
 ```
 ls exp/multi_a/tdnn_7k_rvb1/log/* -tr | head -30
