@@ -368,3 +368,5 @@ tail exp/multi_a/tdnn_7k_rvb1/accuracy.report
 1455    98.0    -0.13065        -0.144481       -0.013831
 Total training time is 1 day, 15:01:33
 ```
+
+![alt text](https://github.com/homink/kaldi_notes/blob/master/accuracy.report.PNG)
