@@ -94,7 +94,7 @@ context_indep.csl  disambig.int       nonsilence.csl       optional_silence.int 
 context_indep.int  disambig.txt       nonsilence.int       optional_silence.txt  sets.txt   wdisambig_phones.int  word_boundary.txt
 ```
 
-The prepared above files are used to make L.fst and L_disambig.fst.
+The prepared above files are used to make L.fst and L_disambig.fst. These fst files inlcude the following information. It is interesting to see that input symbol is the first phone of the word in the lexicon and output symbol is the correspoing word such as 'EH1_B   "END-QUOTE' in L.fst and L_disambig.fst.
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/utils/prepare_lang.sh#L460
 ```
@@ -154,14 +154,14 @@ fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.tx
 1       586727  SH_B    #SHARP-SIGN
 ```
 
-It is interesting to see that the word's first phone is mapped to that word such as 'EH1_B   "END-QUOTE' in L.fst and L_disambig.fst.
-
-
 ## Making G.fst
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/run.sh#L50
 ```
 local/wsj_format_data.sh --lang-suffix "_nosp" || exit 1;
+
+ls data/lang_nosp_test_tg_5k/
+G.fst  L_disambig.fst  L_disambig.fst.sym  L_disambig.fst.txt  L.fst  L.fst.sym  L.fst.txt  oov.int  oov.txt  phones  phones.txt  topo  words.txt
 ```
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/local/wsj_format_data.sh#L51
@@ -169,4 +169,32 @@ https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981
   gunzip -c $lmdir/lm_${lm_suffix}.arpa.gz | \
     arpa2fst --disambig-symbol=#0 \
              --read-symbol-table=$test/words.txt - $test/G.fst
+```
+
+G.fst includs the following information. It is interesting to see input and output symbols are word ids.
+
+```
+fstprint --isymbols=data/lang_nosp_test_tg_5k/words.txt --osymbols=data/lang_nosp_test_tg_5k/words.txt data/lang_nosp_test_tg_5k/G.fst | head
+2       8050    <UNK>   <UNK>   2.9495194
+2       8051    A       A       4.42639732
+2       8052    A.      A.      7.31982613
+2       7       ABANDONED       ABANDONED       13.2024698
+2       9       ABLE    ABLE    14.0942612
+2       8053    ABOUT   ABOUT   7.18028927
+2       8054    ABOVE   ABOVE   10.2153263
+2       8055    ABROAD  ABROAD  12.2217989
+2       14      ABRUPT  ABRUPT  13.7702875
+2       15      ABSENCE ABSENCE 15.496767
+
+fstprint --isymbols=data/lang_nosp_test_tg_5k/words.txt --osymbols=data/lang_nosp_test_tg_5k/words.txt data/lang_nosp_test_tg_5k/G.fst | tail
+170444  33830   STOCKHOLM       STOCKHOLM       2.11031914
+170444  590     #0      <eps>   3.07913184
+170445  134423  PRICES  PRICES  0.133549929
+170445  3987    #0      <eps>   2.04869056
+170446  140651  EXCHANGE        EXCHANGE        0.251212031
+170446  4257    #0      <eps>   1.26320744
+170447  140809  AND     AND     0.0741432458
+170447  4259    #0      <eps>   2.25016212
+170448  143076  BASED   BASED   1.473194
+170448  4391    #0      <eps>   0.226500243
 ```
