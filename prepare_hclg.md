@@ -137,7 +137,7 @@ fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.tx
 1       214503  EH1_B   "END-QUOTE
 1       336665  IH1_B   "IN-QUOTES
 
-grep "#" data/lang_nosp/L_disambig.fst.sym | head
+fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.txt data/lang_nosp/L_disambig.fst | grep "#" data/lang_nosp/L_disambig.fst.sym | head
 1       612518  SH_B    #SHARP-SIGN
 1       1       #0      #0
 2       1       #14     <eps>
@@ -149,9 +149,11 @@ grep "#" data/lang_nosp/L_disambig.fst.sym | head
 61      3       #1      <eps>   0.693147182
 66      1       #1      <eps>   0.693147182
 
-grep "#" data/lang_nosp/L.fst.sym | head
+fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.txt data/lang_nosp/L.fst | grep "#" data/lang_nosp/L.fst.sym | head
 1       586727  SH_B    #SHARP-SIGN
 ```
+
+It is interesting to see that the word's first phone is mapped to that word such as "EH1_B   "END-QUOTE" in L.fst and L_disambig.fst.
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/run.sh#L50
 ```
