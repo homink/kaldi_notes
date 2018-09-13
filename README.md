@@ -12,3 +12,5 @@ This repository describes the Kaldi notes for the Kaldi tool kit beginners. I ho
 ## How to build training recipe
 
 ## [What is found after steps/nnet3/chain/train.py](https://github.com/homink/kaldi_notes/blob/master/chain_training.md)
+
+## How to prepare HCLG.fst
