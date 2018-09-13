@@ -153,7 +153,7 @@ fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.tx
 1       586727  SH_B    #SHARP-SIGN
 ```
 
-It is interesting to see that the word's first phone is mapped to that word such as "EH1_B   "END-QUOTE" in L.fst and L_disambig.fst.
+It is interesting to see that the word's first phone is mapped to that word such as 'EH1_B   "END-QUOTE' in L.fst and L_disambig.fst.
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/run.sh#L50
 ```
