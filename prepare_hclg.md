@@ -2,6 +2,7 @@
 
 Kaldi requires HCLG.fst for the WFST decoding. More details are found in [here](http://kaldi-asr.org/doc/graph.html). We review here step by step with the wsj recipe.
 
+## Making L.fst
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/run.sh#L45
 ```
@@ -155,7 +156,17 @@ fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.tx
 
 It is interesting to see that the word's first phone is mapped to that word such as 'EH1_B   "END-QUOTE' in L.fst and L_disambig.fst.
 
+
+## Making G.fst
+
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/run.sh#L50
 ```
 local/wsj_format_data.sh --lang-suffix "_nosp" || exit 1;
+```
+
+https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/local/wsj_format_data.sh#L51
+```
+  gunzip -c $lmdir/lm_${lm_suffix}.arpa.gz | \
+    arpa2fst --disambig-symbol=#0 \
+             --read-symbol-table=$test/words.txt - $test/G.fst
 ```
