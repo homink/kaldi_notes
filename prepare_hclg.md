@@ -1,6 +1,6 @@
 # How to prepare HCLG.fst
 
-Kaldi requires HCLG.fst for the WFST decoding. More details are found in [here](http://kaldi-asr.org/doc/graph.html). We will trace here step by step with scripts and contents.
+Kaldi requires HCLG.fst for the WFST decoding. More details are found in [here](http://kaldi-asr.org/doc/graph.html). We review here step by step with the wsj recipe.
 
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/run.sh#L45
