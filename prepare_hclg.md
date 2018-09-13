@@ -136,6 +136,21 @@ fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.tx
 1       214216  EH1_B   "END-OF-QUOTE
 1       214503  EH1_B   "END-QUOTE
 1       336665  IH1_B   "IN-QUOTES
+
+grep "#" data/lang_nosp/L_disambig.fst.sym | head
+1       612518  SH_B    #SHARP-SIGN
+1       1       #0      #0
+2       1       #14     <eps>
+34      1       #1      <eps>   0.693147182
+34      3       #1      <eps>   0.693147182
+46      1       #1      <eps>   0.693147182
+46      3       #1      <eps>   0.693147182
+61      1       #1      <eps>   0.693147182
+61      3       #1      <eps>   0.693147182
+66      1       #1      <eps>   0.693147182
+
+grep "#" data/lang_nosp/L.fst.sym | head
+1       586727  SH_B    #SHARP-SIGN
 ```
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/run.sh#L50
