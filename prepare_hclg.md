@@ -198,3 +198,225 @@ fstprint --isymbols=data/lang_nosp_test_tg_5k/words.txt --osymbols=data/lang_nos
 170448  143076  BASED   BASED   1.473194
 170448  4391    #0      <eps>   0.226500243
 ```
+
+## Making LG.fst
+
+https://github.com/kaldi-asr/kaldi/blob/0cf2e23a7d8610e18b7f55ce4e09771b92989477/egs/wsj/s5/utils/mkgraph.sh#L100
+```
+fsttablecompose $lang/L_disambig.fst $lang/G.fst | fstdeterminizestar --use-log=true | \
+    fstminimizeencoded | fstpushspecial > $lang/tmp/LG.fst.$$ || exit 1;
+    
+fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.txt data/lang_nosp_test_tgpr/tmp/LG.fst | head
+0       1       SIL     <eps>   0.698661923
+0       2       SPN_S   <UNK>   4.45802927
+0       3       JH_B    <eps>   5.54836178
+0       4       Y_B     <eps>   5.29441261
+0       5       TH_B    <eps>   6.90070009
+0       6       EY0_B   <eps>   11.958147
+0       7       EY1_B   <eps>   7.98114967
+0       8       EY1_S   <eps>   4.89023113
+0       9       EY2_B   AVIATION        13.7248697
+0       10      CH_B    <eps>   7.19705915
+
+fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.txt data/lang_nosp_test_tgpr/tmp/LG.fst | tail
+2122933 62      AE2_B   <eps>   8.24591923
+2122933 63      F_B     <eps>   3.31286383
+2122933 64      L_B     <eps>   4.357862
+2122933 65      T_B     <eps>   3.90932679
+2122933 66      S_B     <eps>   3.535568
+2122933 67      AA0_B   <eps>   9.55175686
+2122933 68      AA1_B   <eps>   5.00592899
+2122933 69      AA1_S   <eps>   10.8705435
+2122933 70      AA2_B   <eps>   8.441535
+2122933 71      #0      <eps>   7.18324804
+```
+
+## Making CLG.fst
+
+https://github.com/kaldi-asr/kaldi/blob/0cf2e23a7d8610e18b7f55ce4e09771b92989477/egs/wsj/s5/utils/mkgraph.sh#L113
+```
+clg=$lang/tmp/CLG_${N}_${P}.fst
+clg_tmp=$clg.$$
+ilabels=$lang/tmp/ilabels_${N}_${P}
+ilabels_tmp=$ilabels.$$
+fstcomposecontext $nonterm_opt --context-size=$N --central-position=$P \
+    --read-disambig-syms=$lang/phones/disambig.int \
+    --write-disambig-syms=$lang/tmp/disambig_ilabels_${N}_${P}.int \
+    $ilabels_tmp $lang/tmp/LG.fst |\
+    fstarcsort --sort_type=ilabel > $clg_tmp
+mv $clg_tmp $clg
+mv $ilabels_tmp $ilabels
+
+fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.txt data/lang_nosp_test_tgpr/tmp/CLG_1_0.fst | head
+0       1       SIL     <eps>   0.698661923
+0       2       SIL_B   <UNK>   4.45802927
+0       3       SIL_E   <eps>   5.54836178
+0       4       SIL_I   <eps>   5.29441261
+0       5       SIL_S   <eps>   6.90070009
+0       6       SPN     <eps>   11.958147
+0       7       SPN_B   <eps>   7.98114967
+0       8       SPN_E   <eps>   4.89023113
+0       9       SPN_I   AVIATION        13.7248697
+0       10      SPN_S   <eps>   7.19705915
+
+fstprint --isymbols=data/lang_nosp/phones.txt --osymbols=data/lang_nosp/words.txt data/lang_nosp_test_tgpr/tmp/CLG_1_0.fst | tail
+2122926 2033545 ZH_B    <eps>   -0.104465112
+2122927 2122930 ER2_I   <eps>   -0.104464799
+2122928 2122846 AW2_E   <eps>   0.588683307
+2122928 2122846 K_E     <eps>   0.588683307
+2122929 2122879 AH1_B   INCORPORATED    -0.0767181143
+2122929 2122880 AH1_E   INCORPORATED'S  3.49405289
+2122930 2122931 AH_I    <eps>   -0.104464665
+2122931 2122932 IY1_E   <eps>   -0.104464531
+2122932 2122933 AW1_I   <eps>   -0.104464404
+2122933 2112302 K_E     <eps>   -0.104464293
+```
+
+## Making Ha.fst
+
+https://github.com/kaldi-asr/kaldi/blob/0cf2e23a7d8610e18b7f55ce4e09771b92989477/egs/wsj/s5/utils/mkgraph.sh#L126
+```
+make-h-transducer $nonterm_opt --disambig-syms-out=$dir/disambig_tid.int \
+    --transition-scale=$tscale $lang/tmp/ilabels_${N}_${P} $tree $model \
+     > $dir/Ha.fst.$$  || exit 1;
+mv $dir/Ha.fst.$$ $dir/Ha.fst
+
+tree-info exp/mono0a/tree 
+num-pdfs 132
+context-width 1
+central-position 0
+
+gmm-info exp/mono0a/final.mdl 
+number of phones 351
+number of pdfs 132
+number of transition-ids 2286
+number of transition-states 1083
+feature dimension 39
+number of gaussians 977
+
+fstprint exp/mono0a/graph_nosp_tgpr/Ha.fst | head
+0       1       0       1
+0       7       0       2
+0       13      272     3
+0       16      296     4       1.1920929e-07
+0       19      320     5
+0       22      368     6       -5.96046448e-08
+0       25      392     7
+0       28      410     8
+0       31      416     9       1.1920929e-07
+0       34      440     10      5.96046448e-08
+
+fstprint exp/mono0a/graph_nosp_tgpr/Ha.fst | tail
+605     0       0       0
+606     607     808     0
+607     608     810     0       -1.1920929e-07
+608     0       0       0
+609     610     664     0
+610     611     666     0
+611     0       0       0
+612     613     1384    0
+613     614     1386    0
+614     0       0       0
+```
+
+## Making HCLGa.fst
+
+https://github.com/kaldi-asr/kaldi/blob/0cf2e23a7d8610e18b7f55ce4e09771b92989477/egs/wsj/s5/utils/mkgraph.sh#L140
+```
+fsttablecompose $dir/Ha.fst "$clg" | fstdeterminizestar --use-log=true | \
+    fstrmsymbols $dir/disambig_tid.int | fstrmepslocal | \
+    fstminimizeencoded > $dir/HCLGa.fst.$$ || exit 1;
+mv $dir/HCLGa.fst.$$ $dir/HCLGa.fst
+
+fstprint --osymbols=data/lang_nosp/words.txt $dir/HCLGa.fst | head                    
+0       1       2       <eps>   1.02148438
+0       2       3       <eps>   2.67871094
+0       3       4       <eps>   2.67871094
+0       4       164     <UNK>   7.96972656
+0       5       165     <UNK>   7.96972656
+0       6       166     <UNK>   4.51953125
+0       7       272     <eps>   5.54882812
+0       8       296     <eps>   5.29394531
+0       9       320     <eps>   6.90039062
+0       10      368     <eps>   11.9580078
+
+fstprint --osymbols=data/lang_nosp/words.txt $dir/HCLGa.fst | tail
+5921160 54      1712    UNO     14.0527344
+5921160 57      1856    <eps>   7.62792969
+5921160 59      1898    AWE     15.5390625
+5921160 60      1904    <eps>   5.79785156
+5921160 63      1976    <eps>   8.57324219
+5921160 64      2024    <eps>   8.08984375
+5921160 66      2072    <eps>   8.24511719
+5921160 71      2216    <eps>   9.55078125
+5921160 73      2258    <eps>   10.8701172
+5921160 74      2264    <eps>   8.44042969
+
+fstprint --osymbols=data/lang_nosp/words.txt $dir/HCLGa.fst | grep HELLO
+4704402 4704403 824     HELLO   4.4765625
+4968514 4704403 824     HELLO   5.02050781
+4968519 4704403 824     HELLO   4.38378906
+5073244 5073247 1340    HELLO   5.30664062
+5073281 5073267 2132    HELLO   1.58984375
+5388045 5388046 956     HELLO   4.84082031
+5388045 5073247 1340    HELLO   4.84082031
+5533949 4704407 1340    HELLO   8.3671875
+5534115 4704409 2132    HELLO   4.06738281
+5679744 4704407 1340    HELLO   10.6201172
+5680734 4704409 2132    HELLO   7.92773438
+5714977 5388046 956     HELLO   1.82226562
+5714977 5073247 1340    HELLO   1.82226562
+5854255 5854277 1340    HELLO   9.37597656
+5861463 5857604 2132    HELLO   2.390625
+```
+
+## Making HCLG.fst
+
+https://github.com/kaldi-asr/kaldi/blob/0cf2e23a7d8610e18b7f55ce4e09771b92989477/egs/wsj/s5/utils/mkgraph.sh#L149
+```
+add-self-loops --self-loop-scale=$loopscale --reorder=true $model $dir/HCLGa.fst | \
+    $prepare_grammar_command | \
+    fstconvert --fst_type=const > $dir/HCLG.fst.$$ || exit 1;
+mv $dir/HCLG.fst.$$ $dir/HCLG.fst
+
+fstprint --osymbols=data/lang_nosp/words.txt $dir/HCLG.fst | head 
+0       5921161 2       <eps>   1.02148438
+0       5921162 3       <eps>   2.67871094
+0       5921163 4       <eps>   2.67871094
+0       5921164 164     <UNK>   7.96972656
+0       5921165 165     <UNK>   7.96972656
+0       5921166 166     <UNK>   4.51953125
+0       7       272     <eps>   5.54882812
+0       8       296     <eps>   5.29394531
+0       9       320     <eps>   6.90039062
+0       10      368     <eps>   11.9580078
+
+fstprint --osymbols=data/lang_nosp/words.txt $dir/HCLG.fst | tail 
+8792497 5919945 0       <eps>   0.171368375
+8792497 8792497 791     <eps>   0.019869579
+8792498 5919945 0       <eps>   0.128789589
+8792498 8792498 767     <eps>   0.032275755
+8792499 5920181 0       <eps>   0.0780357644
+8792499 8792499 887     <eps>   0.0612936094
+8792500 5920181 0       <eps>   0.128789589
+8792500 8792500 767     <eps>   0.032275755
+8792501 5920579 0       <eps>   0.0152997198
+8792501 8792501 959     <eps>   0.195285901
+
+fstprint --osymbols=data/lang_nosp/words.txt $dir/HCLG.fst | grep HELLO
+4704402 4704403 824     HELLO   4.4765625
+4968514 4704403 824     HELLO   5.12463903
+4968519 4704403 824     HELLO   4.53912354
+5073244 5073247 1340    HELLO   5.37283182
+5073281 5073267 2132    HELLO   1.60514343
+5388045 5388046 956     HELLO   4.90701151
+5388045 5073247 1340    HELLO   4.90701151
+5533949 4704407 1340    HELLO   8.43337822
+5534115 4704409 2132    HELLO   4.08268261
+5679744 4704407 1340    HELLO   10.6863079
+5680734 4704409 2132    HELLO   7.94303417
+5714977 5388046 956     HELLO   1.8884567
+5714977 5073247 1340    HELLO   1.8884567
+5854255 5854277 1340    HELLO   9.44216728
+5861463 5857604 2132    HELLO   2.4059248
+```
