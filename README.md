@@ -15,7 +15,7 @@ This repository describes the Kaldi notes for the Kaldi tool kit beginners. I ho
 
 ## [How to prepare HCLG.fst](https://github.com/homink/kaldi_notes/blob/master/prepare_hclg.md)
 
-### https://github.com/homink/kaldi_notes/blob/master/prepare_hclg.md#making-lfst
+### [Making L.fst](https://github.com/homink/kaldi_notes/blob/master/prepare_hclg.md#making-lfst)
 
 ### [Making G.fst](https://github.com/homink/kaldi_notes/blob/master/prepare_hclg.md#making-gfst)
 
