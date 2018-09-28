@@ -94,7 +94,7 @@ context_indep.csl  disambig.int       nonsilence.csl       optional_silence.int 
 context_indep.int  disambig.txt       nonsilence.int       optional_silence.txt  sets.txt   wdisambig_phones.int  word_boundary.txt
 ```
 
-The prepared above files are used to make L.fst and L_disambig.fst. These fst files inlcude the following information. It is interesting to see that input symbol is the first phone of the word in the lexicon and output symbol is the correspoing word such as 'EH1_B   "END-QUOTE' in L.fst and L_disambig.fst.
+The above prepared files are used to make L.fst and L_disambig.fst. These fst files inlcude the following information. It is interesting to see that **input symbol is the first phone of the word in the lexicon** and **output symbol is the correspoing word** such as 'EH1_B   "END-QUOTE' in L.fst and L_disambig.fst. The WFST decoding can be understood that *a sequence of the predicted phone decides the specific word with the highest possibility under the FST graph along speech data frames*.
 
 https://github.com/kaldi-asr/kaldi/blob/6c9c00d5bae8cef4fecda99f5f8a3a6d0439e981/egs/wsj/s5/utils/prepare_lang.sh#L460
 ```
