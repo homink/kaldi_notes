@@ -50,13 +50,20 @@ We input topology, feture data, etc and we obtain model and tree. **topo** is st
 </Topology>
 ```
 
-Here is summary information about **tree**.
+Here is summary information about **tree** and **final.mdl**.
 ```
-../../../src/bin/tree-info exp/mono0a/tree 
 ../../../src/bin/tree-info exp/mono0a/tree 
 num-pdfs 132
 context-width 1
 central-position 0
+
+../../../src/gmmbin/gmm-info exp/mono0a/final.mdl 
+number of phones 351
+number of pdfs 132
+number of transition-ids 2286
+number of transition-states 1083
+feature dimension 39
+number of gaussians 976
 ```
 
 
