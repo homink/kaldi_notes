@@ -50,6 +50,15 @@ We input topology, feture data, etc and we obtain model and tree. **topo** is st
 </Topology>
 ```
 
+Here is summary information about **tree**.
+```
+../../../src/bin/tree-info exp/mono0a/tree 
+../../../src/bin/tree-info exp/mono0a/tree 
+num-pdfs 132
+context-width 1
+central-position 0
+```
+
 
 # compile-train-graphs
 
