@@ -211,7 +211,7 @@ The lattice (i.e. [CompactLattice type known in FSA, acceptor, format, with an a
 
 The input/output symbol are usually the word ids and the weight is:
 
-[the graph cost],[the acoustic cost],[a string sequence of integers]
+[the graph cost],[the acoustic cost],[a string sequence of integers - transition ids]
 
 The integers represent the transition ids, i.e. the frame-alignment for this word symbol.
 
