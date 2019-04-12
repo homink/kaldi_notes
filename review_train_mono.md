@@ -86,3 +86,93 @@ LOG (compile-train-graphs[5.5.201~1-afc5e]:main():compile-train-graphs.cc:147) c
 # Accounting: time=1 threads=1
 # Ended (code 0) at Wed Apr  3 15:07:37 PDT 2019, elapsed time 1 seconds
 ```
+
+# align-equal-compiled
+
+```
+  echo "$0: Aligning data equally (pass 0)"
+  $cmd JOB=1:$nj $dir/log/align.0.JOB.log \
+    align-equal-compiled "ark:gunzip -c $dir/fsts.JOB.gz|" "$feats" ark,t:-  \| \
+    gmm-acc-stats-ali --binary=true $dir/0.mdl "$feats" ark:- \
+    $dir/0.JOB.acc || exit 1;
+```
+```
+# align-equal-compiled "ark:gunzip -c exp/mono0a/fsts.1.gz|" "ark,s,cs:apply-cmvn  --utt2spk=ark:data/train_si84_2kshort/split10/1/utt2spk scp:data/train_si84_2kshort/split10/1/cmvn.scp scp:data/train_si84_2kshort/split10/1/feats.scp ark:- | add-deltas  ark:- ark:- |" ark,t:- | gmm-acc-stats-ali --binary=true exp/mono0a/0.mdl "ark,s,cs:apply-cmvn  --utt2spk=ark:data/train_si84_2kshort/split10/1/utt2spk scp:data/train_si84_2kshort/split10/1/cmvn.scp scp:data/train_si84_2kshort/split10/1/feats.scp ark:- | add-deltas  ark:- ark:- |" ark:- exp/mono0a/0.1.acc 
+# Started at Thu Apr  4 15:44:40 PDT 2019
+#
+gmm-acc-stats-ali --binary=true exp/mono0a/0.mdl 'ark,s,cs:apply-cmvn  --utt2spk=ark:data/train_si84_2kshort/split10/1/utt2spk scp:data/train_si84_2kshort/split10/1/cmvn.scp scp:data/train_si84_2kshort/split10/1/feats.scp ark:- | add-deltas  ark:- ark:- |' ark:- exp/mono0a/0.1.acc 
+align-equal-compiled 'ark:gunzip -c exp/mono0a/fsts.1.gz|' 'ark,s,cs:apply-cmvn  --utt2spk=ark:data/train_si84_2kshort/split10/1/utt2spk scp:data/train_si84_2kshort/split10/1/cmvn.scp scp:data/train_si84_2kshort/split10/1/feats.scp ark:- | add-deltas  ark:- ark:- |' ark,t:- 
+add-deltas ark:- ark:- 
+apply-cmvn --utt2spk=ark:data/train_si84_2kshort/split10/1/utt2spk scp:data/train_si84_2kshort/split10/1/cmvn.scp scp:data/train_si84_2kshort/split10/1/feats.scp ark:- 
+add-deltas ark:- ark:- 
+apply-cmvn --utt2spk=ark:data/train_si84_2kshort/split10/1/utt2spk scp:data/train_si84_2kshort/split10/1/cmvn.scp scp:data/train_si84_2kshort/split10/1/feats.scp ark:- 
+LOG (gmm-acc-stats-ali[5.5.201~1-afc5e]:main():gmm-acc-stats-ali.cc:105) Processed 50 utterances; for utterance 013o031b avg. like is -106.575 over 507 frames.
+LOG (gmm-acc-stats-ali[5.5.201~1-afc5e]:main():gmm-acc-stats-ali.cc:105) Processed 100 utterances; for utterance 015c0214 avg. like is -106.779 over 328 frames.
+LOG (gmm-acc-stats-ali[5.5.201~1-afc5e]:main():gmm-acc-stats-ali.cc:105) Processed 150 utterances; for utterance 016o030v avg. like is -111.488 over 358 frames.
+LOG (apply-cmvn[5.5.201~1-afc5e]:main():apply-cmvn.cc:162) Applied cepstral mean normalization to 213 utterances, errors on 0
+LOG (align-equal-compiled[5.5.201~1-afc5e]:main():align-equal-compiled.cc:107) Success: done 213 utterances.
+LOG (gmm-acc-stats-ali[5.5.201~1-afc5e]:main():gmm-acc-stats-ali.cc:105) Processed 200 utterances; for utterance 018c020k avg. like is -107.727 over 485 frames.
+LOG (apply-cmvn[5.5.201~1-afc5e]:main():apply-cmvn.cc:162) Applied cepstral mean normalization to 213 utterances, errors on 0
+LOG (gmm-acc-stats-ali[5.5.201~1-afc5e]:main():gmm-acc-stats-ali.cc:112) Done 213 files, 0 with errors.
+LOG (gmm-acc-stats-ali[5.5.201~1-afc5e]:main():gmm-acc-stats-ali.cc:115) Overall avg like per frame (Gaussian only) = -109.132 over 91739 frames.
+LOG (gmm-acc-stats-ali[5.5.201~1-afc5e]:main():gmm-acc-stats-ali.cc:123) Written accs.
+# Accounting: time=0 threads=1
+# Ended (code 0) at Thu Apr  4 15:44:40 PDT 2019, elapsed time 0 seconds
+```
+
+# gmm-est
+
+```
+  gmm-est --min-gaussian-occupancy=3  --mix-up=$numgauss --power=$power \
+    $dir/0.mdl "gmm-sum-accs - $dir/0.*.acc|" $dir/1.mdl 2> $dir/log/update.0.log || exit 1;
+```
+```
+gmm-est --min-gaussian-occupancy=3 --mix-up=132 --power=0.25 exp/mono0a/0.mdl 'gmm-sum-accs - exp/mono0a/0.*.acc|' exp/mono0a/1.mdl 
+gmm-sum-accs - exp/mono0a/0.1.acc exp/mono0a/0.10.acc exp/mono0a/0.2.acc exp/mono0a/0.3.acc exp/mono0a/0.4.acc exp/mono0a/0.5.acc exp/mono0a/0.6.acc exp/mono0a/0.7.acc exp/mono0a/0.8.acc exp/mono0a/0.9.acc 
+LOG (gmm-sum-accs[5.5.201~1-afc5e]:main():gmm-sum-accs.cc:63) Summed 10 stats, total count 849568, avg like/frame -108.537
+LOG (gmm-sum-accs[5.5.201~1-afc5e]:main():gmm-sum-accs.cc:66) Total count of stats is 849568
+LOG (gmm-sum-accs[5.5.201~1-afc5e]:main():gmm-sum-accs.cc:67) Written stats to -
+LOG (gmm-est[5.5.201~1-afc5e]:MleUpdate():transition-model.cc:528) TransitionModel::Update, objf change is 0.0979067 per frame over 849568 frames. 
+LOG (gmm-est[5.5.201~1-afc5e]:MleUpdate():transition-model.cc:531) 0 probabilities floored, 549 out of 1083 transition-states skipped due to insuffient data (it is normal to have some skipped.)
+LOG (gmm-est[5.5.201~1-afc5e]:main():gmm-est.cc:102) Transition model update: Overall 0.0979067 log-like improvement per frame over 849568 frames.
+LOG (gmm-est[5.5.201~1-afc5e]:MleAmDiagGmmUpdate():mle-am-diag-gmm.cc:225) 0 variance elements floored in 0 Gaussians, out of 132
+LOG (gmm-est[5.5.201~1-afc5e]:MleAmDiagGmmUpdate():mle-am-diag-gmm.cc:229) Removed 0 Gaussians due to counts < --min-gaussian-occupancy=3 and --remove-low-count-gaussians=true
+LOG (gmm-est[5.5.201~1-afc5e]:main():gmm-est.cc:113) GMM update: Overall 0.427029 objective function improvement per frame over 849568 frames
+LOG (gmm-est[5.5.201~1-afc5e]:main():gmm-est.cc:116) GMM update: Overall avg like per frame = -108.537 over 849568 frames.
+LOG (gmm-est[5.5.201~1-afc5e]:SplitByCount():am-diag-gmm.cc:116) Split 132 states with target = 132, power = 0.25, perturb_factor = 0.01 and min_count = 20, split #Gauss from 132 to 132
+LOG (gmm-est[5.5.201~1-afc5e]:main():gmm-est.cc:146) Written model to exp/mono0a/1.mdl
+```
+
+# EM iteration
+
+```
+beam=6 # will change to 10 below after 1st pass
+# note: using slightly wider beams for WSJ vs. RM.
+x=1
+while [ $x -lt $num_iters ]; do
+  echo "$0: Pass $x"
+  if [ $stage -le $x ]; then
+    if echo $realign_iters | grep -w $x >/dev/null; then
+      echo "$0: Aligning data"
+      mdl="gmm-boost-silence --boost=$boost_silence `cat $lang/phones/optional_silence.csl` $dir/$x.mdl - |"
+      $cmd JOB=1:$nj $dir/log/align.$x.JOB.log \
+        gmm-align-compiled $scale_opts --beam=$beam --retry-beam=$[$beam*4] --careful=$careful "$mdl" \
+        "ark:gunzip -c $dir/fsts.JOB.gz|" "$feats" "ark,t:|gzip -c >$dir/ali.JOB.gz" \
+        || exit 1;
+    fi
+    $cmd JOB=1:$nj $dir/log/acc.$x.JOB.log \
+      gmm-acc-stats-ali  $dir/$x.mdl "$feats" "ark:gunzip -c $dir/ali.JOB.gz|" \
+      $dir/$x.JOB.acc || exit 1;
+
+    $cmd $dir/log/update.$x.log \
+      gmm-est --write-occs=$dir/$[$x+1].occs --mix-up=$numgauss --power=$power $dir/$x.mdl \
+      "gmm-sum-accs - $dir/$x.*.acc|" $dir/$[$x+1].mdl || exit 1;
+    rm $dir/$x.mdl $dir/$x.*.acc $dir/$x.occs 2>/dev/null
+  fi
+  if [ $x -le $max_iter_inc ]; then
+     numgauss=$[$numgauss+$incgauss];
+  fi
+  beam=10
+  x=$[$x+1]
+done
+```
